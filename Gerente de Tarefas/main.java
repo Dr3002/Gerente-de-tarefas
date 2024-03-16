@@ -1,16 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+
 public class main {
+
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Tarefa tarefa = new Tarefa("Comer","13/03/2024","Alimentar os Cachorros");
         boolean continuar = true;
         int opcao;
 
         while(continuar){
             System.out.println("MENU:");
-            System.out.println("1- Criar tarefa");
+            System.out.println("1- Adicionar tarefa");
             System.out.println("2- Deletar tarefa");
             System.out.println("3- Modificar tarefa");
             System.out.println("4- Sair");
@@ -18,17 +21,20 @@ public class main {
             opcao = scanner.nextInt();
             scanner.nextLine(); // Limpa o buffer
 
+            Tarefa tarefa = new Tarefa("","","");
+
             switch (opcao) {
                 case 1:
-                    Tarefa.criarTarefa();
+                    Tarefa.addTarefa(tarefa);
                     break;
                 case 2:
-                    Tarefa.deletarTarefa();
+                    Tarefa.deleteTarefa();
                     break;
                 case 3:
-                    Tarefa.modificarTarefa();
+                    Tarefa.modifyTarefa();
                     break;
                 case 4:
+                    System.out.println("Obrigado por acessar o código.");
                     continuar = false;
                     break;
                 default:
