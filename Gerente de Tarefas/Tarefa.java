@@ -1,3 +1,7 @@
+import com.google.gson.Gson;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +14,7 @@ public class Tarefa {
     String descricao;
 
     //Lista de tarefas
-    public List<Tarefa> listaDeTarefas = new ArrayList<>();
+    public static List<Tarefa> listaDeTarefas = new ArrayList<>();
 
 //Construtor
 public Tarefa(String nome,String data,String descricao){
@@ -50,7 +54,7 @@ public String toString(){
 
 //Metódos
 
-public static void addTarefa(Tarefa tarefa){
+public static List<Tarefa> addTarefa(Tarefa tarefa){
     while(true){
         System.out.println("Digite o nome da tarefa: ");
         String nome = scanner.nextLine();
@@ -58,15 +62,21 @@ public static void addTarefa(Tarefa tarefa){
         String data = scanner.nextLine();
         System.out.println("Digite a descrição da tarefa: ");
         String descricao = scanner.nextLine();
-
         tarefa.setNome(nome);
         tarefa.setData(data);
         tarefa.setDescricao(descricao);
         tarefa.listaDeTarefas.add(new Tarefa(nome, data, descricao));
-
+        Gson gson = new Gson();
+        //Escrever em um Arquivo
+        try {
+            FileWriter writer = new FileWriter("tarefas.json");
+            gson.toJson(Tarefa.listaDeTarefas, writer);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Deseja adicionar mais tarefas? (S/N)");
         String resposta = scanner.nextLine();
-
         if(resposta.equalsIgnoreCase("N")){
             break;
         }
@@ -74,13 +84,10 @@ public static void addTarefa(Tarefa tarefa){
     }
 
 
-    // Imprimindo os detalhes da tarefa
-    System.out.println("Tarefa criada com sucesso:");
-    System.out.println(tarefa);
-
-    //Imprimindo tarefas
-    System.out.println("Tarefas criadas com sucesso:");
-    System.out.println(tarefa.listaDeTarefas);
+    // Imprimindo os detalhes da tarefa individualmente
+    //System.out.println("Tarefa criada com sucesso:");
+    //System.out.println(tarefa);
+    return listaDeTarefas;
 }
 public static void deleteTarefa(){
     System.out.println("Ainda não faz nada!"); 
@@ -88,6 +95,10 @@ public static void deleteTarefa(){
 
 public static void modifyTarefa(){
     System.out.println("Ainda não faz nada!");
+}
+public static void showTarefas(List<Tarefa> listaDeTarefas){
+    System.out.println("Lista de tarefas:");
+    System.out.println(listaDeTarefas);
 }
 
 }
